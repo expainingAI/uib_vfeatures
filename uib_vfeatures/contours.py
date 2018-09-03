@@ -6,7 +6,11 @@ class Contours:
     @staticmethod
     def area(contour):
         """
-        Calc the area of the object of the contour
+        @brief Calculates a contour area
+
+        The function computes a contour area. Similarly to moments , the area is computed using the Green
+        formula. The function will most certainly give a wrong
+        results for contours with self-intersections.
 
         :param contour:
         :return:
@@ -16,21 +20,33 @@ class Contours:
     @staticmethod
     def perimeter(contour):
         """
-        Calc the perimeter of the contour
+        @brief Calculates a contour perimeter
 
-        :param contour:
+        The function computes a closed contour perimeter.
+
+        :param contour: Input vector of 2D points, stored in std::vector or Mat
         :return:
         """
         return cv2.arcLength(contour, True)
 
     @staticmethod
     def convex_hull(contour):
+        """
+        @brief Finds the convex hull of a point set.
+
+        The functions find the convex hull of a 2D point set using the Sklansky's algorithm [128] that has O(N logN)
+        complexity in the current implementation on OpenCV.
+
+        :param contour: Input 2D point set, stored in std::vector or Mat
+        :return set of points:
+        """
         return cv2.convexHull(contour)
 
     @staticmethod
     def convex_hull_perimeter(contour):
         """
-        Return the perimeter of the convex hull of the contour
+        @brief Finds the perimeter of a convex-hull.
+
         :param contour:
         :return:
         """
@@ -39,7 +55,8 @@ class Contours:
     @staticmethod
     def convex_hull_area(contour):
         """
-        Return the area of the convex hull of the contour
+        Calculates the area of the convex hull from the contour, using the same function that the area.
+
         :param contour:
         :return:
         """
@@ -48,7 +65,7 @@ class Contours:
     @staticmethod
     def bounding_box_area(contour):
         """
-        Return the area of the bounding box of the contour
+        Calculates the area of the bounding box of the contour.
 
         :param contour:
         :return:
@@ -58,7 +75,8 @@ class Contours:
     @staticmethod
     def rectangularity(contour):
         """
-        Return the proportion between the real area of the contour and the bounding box
+        Calculates the proportion between the real area of the contour and the bounding box
+
         :param contour: 1 channel image
         :return:
         """
@@ -67,7 +85,8 @@ class Contours:
     @staticmethod
     def max_r(contour):
         """
-        Return the radius of the enclosing circle of the contour
+        Calculates the radius of the enclosing circle of the contour
+
         :param contour:
         :return:
         """
@@ -77,7 +96,8 @@ class Contours:
     @staticmethod
     def min_r(contour):
         """
-        Return the minor radius of the ellipse from the contour
+        Calculates the minor radius of the ellipse from the contour
+
         :param contour:
         :return:
         """
@@ -86,7 +106,8 @@ class Contours:
     @staticmethod
     def feret(contour):
         """
-        Return the major diagonal of the enclosing ellipse of the contour
+        Calculates the major diagonal of the enclosing ellipse of the contour
+
         :param contour:
         :return:
         """
@@ -96,7 +117,8 @@ class Contours:
     @staticmethod
     def breadth(contour):
         """
-        Return the minor diagonal of the ellipse from the contour
+        Calculates the minor diagonal of the ellipse from the contour
+
         :param contour:
         :return:
         """
@@ -107,6 +129,7 @@ class Contours:
     def feret_angle(contour):
         """
         Return the feret angle from the horizontal
+
         :param contour:
         :return:
         """
@@ -118,6 +141,7 @@ class Contours:
     def roundness(contour):
         """
         Circularity corrected by the aspect ratio
+
         ref : https://progearthplanetsci.springeropen.com/articles/10.1186/s40645-015-0078-x
         :param contour: 1 channel image
         :return:
@@ -247,4 +271,5 @@ class Contours:
         m = cv2.moments(contour)
         cx = int(m['m10'] / m['m00'])
         cy = int(m['m01'] / m['m00'])
+
         return [cx, cy]

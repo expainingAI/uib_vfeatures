@@ -1,15 +1,14 @@
 from matplotlib import pyplot as plt
-import numpy as np
 from copy import copy
 import cv2
-from contours import Contours
+from uib_vfeatures.contours import Contours
 
 
 class Masks:
     @staticmethod
     def solidity(mask, screen=False):
         """
-        Calc the proportion between the area of the object in the mask and the convex-hull
+        Calculates the proportion between the area of the object in the mask and the convex-hull
         :param mask: 1 channel image
         :param screen:
         :return:
@@ -34,7 +33,7 @@ class Masks:
     @staticmethod
     def convex_hull_perimeter(mask):
         """
-        Return the perimeter of the convex hull of the biggest object into the mask
+        Calculates the perimeter of the convex hull of the biggest object into the mask
         :param mask: 1 channel image
         :return:
         """
@@ -45,7 +44,7 @@ class Masks:
     @staticmethod
     def convex_hull_area(mask):
         """
-        Return the area of the convex hull of the biggest object into the mask
+        Calculates the area of the convex hull of the biggest object into the mask
         :param mask: 1 channel image
         :return:
         """
@@ -56,7 +55,7 @@ class Masks:
     @staticmethod
     def bounding_box_area(mask):
         """
-        Return the area of the bounding box of the biggest object into the mask
+        Calculates the area of the bounding box of the biggest object into the mask
 
         :param mask: 1 channel image
         :return:
@@ -68,7 +67,7 @@ class Masks:
     @staticmethod
     def rectungalirity(mask):
         """
-        Return the proportion between the real area of the mask and the bounding box
+        Calculates the proportion between the real area of the mask and the bounding box
         :param mask: 1 channel image
         :return:
         """
@@ -79,7 +78,7 @@ class Masks:
     @staticmethod
     def min_r(mask):
         """
-        Return the minor radius of the ellipse from the biggest object of the mask
+        Calculates the minor radius of the ellipse from the biggest object of the mask
         :param mask:
         :return:
         """
@@ -90,7 +89,7 @@ class Masks:
     @staticmethod
     def max_r(mask):
         """
-        Return the radius of the enclosing circle of the contour
+        Calculates the radius of the enclosing circle of the contour
         :param contour:
         :return:
         """
@@ -102,7 +101,7 @@ class Masks:
     @staticmethod
     def feret(mask):
         """
-        Return the major diagonal of the enclosing ellipse from the biggest object in the mask
+        Calculates the major diagonal of the enclosing ellipse from the biggest object in the mask
         :param contour:
         :return:
         """
@@ -114,7 +113,7 @@ class Masks:
     @staticmethod
     def breadth(mask):
         """
-        Return the minor diagonal of the fitting ellipse. It's equal to the width of the object
+        Calculates the minor diagonal of the fitting ellipse. It's equal to the width of the object
         :param mask:
         :return:
         """
@@ -125,7 +124,7 @@ class Masks:
     @staticmethod
     def circularity(mask):
         """
-        Calc the likeliness of an object to a circle
+        Calculates the likeliness of an object to a circle
         :param mask: 1 channel image
         :return:
         """
@@ -148,7 +147,7 @@ class Masks:
     @staticmethod
     def feret_angle(mask):
         """
-        Return the feret angle from the horizontal
+        Calculates the feret angle from the horizontal
         :param mask:
         :return:
         """
@@ -159,7 +158,7 @@ class Masks:
     @staticmethod
     def eccentricity(mask, screen=False):
         """
-        Calc how much the conic section deviates from being circular
+        Calculates how much the conic section deviates from being circular
 
         :param mask: 1 channel image
         :param screen:
@@ -179,7 +178,7 @@ class Masks:
     @staticmethod
     def center(mask):
         """
-        Calc the center of the biggets object into the mask
+        Calculates the center of the biggets object into the mask
         :param mask:
         :return:
         """
