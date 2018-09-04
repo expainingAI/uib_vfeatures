@@ -12,6 +12,7 @@ setup(name='uib_vfeatures',
           'scikit-image',
           'opencv-python',
           'matplotlib',
-          'scipy'
+          'scipy',
+          'numpy'
       ],
       zip_safe=False)

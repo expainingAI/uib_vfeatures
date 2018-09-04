@@ -2,6 +2,7 @@ from matplotlib import pyplot as plt
 from copy import copy
 import cv2
 from uib_vfeatures.contours import Contours
+import numpy as np
 
 
 class Masks:
@@ -55,19 +56,31 @@ class Masks:
         return Contours.convex_hull_area(cnt)
 
     @staticmethod
-    def bounding_box_area(mask):
+    def bounding_box_area(mask, screen=False):
         """
         @brief Calculates the area of the bounding box of the contour.
 
         :param mask: 1 channel image
+        :param screen: Boolean
         :return:
         """
+
         cnt = Masks.extract_contour(mask)
+
+        if screen:
+            rect = cv2.minAreaRect(cnt)
+            box = cv2.boxPoints(rect)
+            box = np.int0(box)
+            mask_cp = copy(mask)
+            cv2.drawContours(mask, [box], 0, (0, 0, 255), 2)
+
+            plt.imshow(mask_cp)
+            plt.show()
 
         return Contours.bounding_box_area(cnt)
 
     @staticmethod
-    def rectungalirity(mask):
+    def rectangularity(mask):
         """
         @brief Calculates the area of the bounding box of the contour.
 
@@ -93,7 +106,7 @@ class Masks:
     def max_r(mask):
         """
         @brief Calculates the radius of the enclosing circle of the contour
-        :param contour:
+        :param mask:
         :return:
         """
 
@@ -105,7 +118,7 @@ class Masks:
     def feret(mask):
         """
         @brief Calculates the major diagonal of the enclosing ellipse of the contour
-        :param contour:
+        :param mask:
         :return:
         """
 
