@@ -6,6 +6,7 @@ import numpy as np
 
 
 class Masks:
+
     @staticmethod
     def solidity(mask, screen=False):
         """
@@ -72,7 +73,7 @@ class Masks:
             box = cv2.boxPoints(rect)
             box = np.int0(box)
             mask_cp = copy(mask)
-            cv2.drawContours(mask, [box], 0, (0, 0, 255), 2)
+            cv2.drawContours(mask_cp, [box], -1, (100, 100, 100), 20)
 
             plt.imshow(mask_cp)
             plt.show()
