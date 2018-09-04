@@ -33,7 +33,8 @@ class Masks:
     @staticmethod
     def convex_hull_perimeter(mask):
         """
-        Calculates the perimeter of the convex hull of the biggest object into the mask
+        @brief Finds the perimeter of the convex-hull.
+
         :param mask: 1 channel image
         :return:
         """
@@ -44,7 +45,8 @@ class Masks:
     @staticmethod
     def convex_hull_area(mask):
         """
-        Calculates the area of the convex hull of the biggest object into the mask
+        Calculates the area of the convex hull from the contour, using the same function that the area of any object.
+
         :param mask: 1 channel image
         :return:
         """
@@ -55,7 +57,7 @@ class Masks:
     @staticmethod
     def bounding_box_area(mask):
         """
-        Calculates the area of the bounding box of the biggest object into the mask
+        @brief Calculates the area of the bounding box of the contour.
 
         :param mask: 1 channel image
         :return:
@@ -67,7 +69,8 @@ class Masks:
     @staticmethod
     def rectungalirity(mask):
         """
-        Calculates the proportion between the real area of the mask and the bounding box
+        @brief Calculates the area of the bounding box of the contour.
+
         :param mask: 1 channel image
         :return:
         """
@@ -78,7 +81,7 @@ class Masks:
     @staticmethod
     def min_r(mask):
         """
-        Calculates the minor radius of the ellipse from the biggest object of the mask
+        @brief Calculates the minor radius of the ellipse from the contour
         :param mask:
         :return:
         """
@@ -89,7 +92,7 @@ class Masks:
     @staticmethod
     def max_r(mask):
         """
-        Calculates the radius of the enclosing circle of the contour
+        @brief Calculates the radius of the enclosing circle of the contour
         :param contour:
         :return:
         """
@@ -101,7 +104,7 @@ class Masks:
     @staticmethod
     def feret(mask):
         """
-        Calculates the major diagonal of the enclosing ellipse from the biggest object in the mask
+        @brief Calculates the major diagonal of the enclosing ellipse of the contour
         :param contour:
         :return:
         """
@@ -113,7 +116,7 @@ class Masks:
     @staticmethod
     def breadth(mask):
         """
-        Calculates the minor diagonal of the fitting ellipse. It's equal to the width of the object
+        @brief Calculates the minor diagonal of the ellipse from the contour
         :param mask:
         :return:
         """
@@ -124,7 +127,7 @@ class Masks:
     @staticmethod
     def circularity(mask):
         """
-        Calculates the likeliness of an object to a circle
+        @brief Calc the likeliness of an object to a circle
         :param mask: 1 channel image
         :return:
         """
@@ -147,7 +150,7 @@ class Masks:
     @staticmethod
     def feret_angle(mask):
         """
-        Calculates the feret angle from the horizontal
+        @brief Return the angle between the feret and the horizontal
         :param mask:
         :return:
         """
@@ -158,7 +161,11 @@ class Masks:
     @staticmethod
     def eccentricity(mask, screen=False):
         """
-        Calculates how much the conic section deviates from being circular
+        @brief Calc how much the conic section deviates from being circular
+
+        For any point of a conic section, the distance between a fixed point F and a fixed straight line l is always
+        equal to a positive constant, the eccentricity. Is calculed by the relation between the two diagonals of the
+        elipse.
 
         :param mask: 1 channel image
         :param screen:
@@ -178,8 +185,11 @@ class Masks:
     @staticmethod
     def center(mask):
         """
-        Calculates the center of the biggets object into the mask
-        :param mask:
+        @brief Calculate the centroid of a contour
+
+        The centroid of a plane figure is the arithmetic mean of all the point in the figure.
+
+        :param mask:  1 channel image
         :return:
         """
         cnt = Masks.extract_contour(mask)
@@ -201,10 +211,11 @@ class Masks:
     @staticmethod
     def aspect_ratio(mask):
         """
-        Proportional relationship between its width and it's height
-        :param contour:
+        @brief Proportional relationship between its width and it's height
+        :param mask: 2D Vector, 1 channel image
         :return:
         """
+
         cnt = Masks.extract_contour(mask)
 
         return Contours.aspect_ratio(cnt)
@@ -212,7 +223,8 @@ class Masks:
     @staticmethod
     def area_equivalent_diameter(mask):
         """
-        The diamater of the real area of the mask
+        @brief The diamater of the real area of the contour
+
         :param mask:
         :return:
         """
@@ -223,7 +235,10 @@ class Masks:
     @staticmethod
     def perimeter_equivalent_diameter(mask):
         """
-        The diameter of the real perimeter of the contour
+        @brief The diameter of the real perimeter of the contour
+
+        :param mask: 2D Vector, 1 channel image
+        :return:
         """
         cnt = Masks.extract_contour(mask)
 
@@ -265,6 +280,14 @@ class Masks:
 
     @staticmethod
     def convexity(mask):
+        """
+        @brief Calc the convexity of the contour
+
+        The convexity is a measure of the curvature of an object. Is calc by the relation between the perimeter of
+        the convex hull and the perimeter of the object.
+        :param mask:
+        :return:
+        """
         cnt = Masks.extract_contour(mask)
 
         return Contours.convexity(cnt)
@@ -294,6 +317,17 @@ class Masks:
 
     @staticmethod
     def extract_contour(mask):
+        """
+        @brief Finds contours in a binary image.
+
+        The function retrieves contours from the binary image using the algorithm @cite Suzuki85 . The contours
+        are a useful tool for shape analysis and object detection and recognition.
+
+        @note Source image is not modified by this function.
+
+        :param mask:
+        :return:
+        """
         if len(mask.shape) != 2:
             raise ValueError('Image is not a maks, multiples channels of color')
 
