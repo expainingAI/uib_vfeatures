@@ -2,7 +2,7 @@ from .contours import Contours
 from .masks import Masks
 from .texture import texture_features
 
-Features = {'Solidity': Masks.solidity, 'CH Perimeter': Masks.convex_hull_perimeter, 'CH Area': Masks.convex_hull_area, 'BB Area': Masks.bounding_box_area,
+Features_mask = {'Solidity': Masks.solidity, 'CH Perimeter': Masks.convex_hull_perimeter, 'CH Area': Masks.convex_hull_area, 'BB Area': Masks.bounding_box_area,
                 'Rectangularity': Masks.rectangularity, 'Min r': Masks.min_r, 'Max r': Masks.max_r, 'Feret': Masks.feret, 'Breadth': Masks.breadth,
                 'Circularity': Masks.circularity, 'Roundness': Masks.roundness, 'Feret Angle': Masks.feret_angle, 'Eccentricity': Masks.eccentricity,
                 'Center': Masks.center, 'Sphericity': Masks.sphericity, 'Aspect Ratio': Masks.aspect_ratio, 'Area equivalent': Masks.area_equivalent_diameter,
