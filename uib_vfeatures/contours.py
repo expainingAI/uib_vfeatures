@@ -293,4 +293,4 @@ class Contours:
         cx = int(m['m10'] / m['m00'])
         cy = int(m['m01'] / m['m00'])
 
-        return [cx, cy]
+        return (cx, cy)
