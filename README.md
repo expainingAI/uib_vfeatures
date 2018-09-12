@@ -69,7 +69,7 @@ a grey-scale image.
 
 ## Demo
 
-We're going to use our library with a mask image.
+We're going to use our library with a mask image .
 
 ```python
 from uib_vfeatures.masks import Masks
