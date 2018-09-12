@@ -3,10 +3,23 @@
 ## Introduction 
 
 *UIB - V Features* provide a set of useful features. With three types of features: morphological, texture 
-and color. All the features can be used with mask of with the contours.
+and color. All the features can be used with mask or with the contours. Every feature is a numerical value 
+that used in ML can improve their results. 
  
 The morphological features are all grouped in one iterator, so you can calculate all the features inside 
 a loop easily.
+
+The library use mask and contours. Masks are two value image, where the object has a value diferent than the rest of 
+the image. A contour is a 2D vector of points that define a contour. To calculate a contour normally is used the OpenCV
+function.
+
+### Installation
+
+Install the library is very simple with pip
+
+```
+pip install uib-vfeatures
+``` 
 
 ---
 ## List of features
