@@ -349,27 +349,27 @@ class Contours:
         p = 0
         q = 1
 
-        while Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[next(p, n)][0],
-                            convex_hull_contour[next(q, n)][0]) > Contours._triangle_area(convex_hull_contour[p][0],
-                                                                                convex_hull_contour[next(p, n)][0],
-                                                                                convex_hull_contour[q][0]):
-            q = next(q, n)
+        while Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[Contours._next_point(p, n)][0],
+                            convex_hull_contour[Contours._next_point(q, n)][0]) > \
+                Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[Contours._next_point(p, n)][0],
+                                        convex_hull_contour[q][0]):
+            q = Contours._next_point(q, n)
 
         while p != p0:
-            p = next(p, n)
+            p = Contours._next_point(p, n)
             listq = [q]
-            while Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[next(p, n)][0],
-                                convex_hull_contour[next(q, n)][0]) > Contours._triangle_area(convex_hull_contour[p][0],
-                                                                                    convex_hull_contour[next(p, n)][0],
-                                                                                    convex_hull_contour[q][0]):
-                q = next(q, n)
+            while Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[Contours._next_point(p, n)][0],
+                                          convex_hull_contour[Contours._next_point(q, n)][0]) > \
+                    Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[Contours._next_point(p, n)][0],
+                                            convex_hull_contour[q][0]):
+                q = Contours._next_point(q, n)
                 listq.append(q)
 
-            if Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[next(p, n)][0],
-                             convex_hull_contour[next(q, n)][0]) == Contours._triangle_area(convex_hull_contour[p][0],
-                                                                                  convex_hull_contour[next(p, n)][0],
+            if Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[Contours._next_point(p, n)][0],
+                                       convex_hull_contour[Contours._next_point(q, n)][0]) == \
+                    Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[Contours._next_point(p, n)][0],
                                                                                   convex_hull_contour[q][0]):
-                listq.append(next(q, n))
+                listq.append(Contours._next_point(q, n))
 
             for i in range(len(listq)):
                 q = ((listq[i] - 1) % n) + 1
@@ -413,7 +413,7 @@ class Contours:
                math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
 
     @staticmethod
-    def _next(p, n):
+    def _next_point(p, n):
         """
         Helper method that calculates next antipodal point
         :param p: previous point
