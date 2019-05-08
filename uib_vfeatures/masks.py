@@ -125,7 +125,7 @@ class Masks:
 
         cnt = Masks.extract_contour(mask)
 
-        return Contours.feret(cnt)
+        return Contours.major_axis(cnt)
 
     @staticmethod
     def breadth(mask):
@@ -136,7 +136,7 @@ class Masks:
         """
         cnt = Masks.extract_contour(mask)
 
-        return Contours.breadth(cnt)
+        return Contours.minor_axis(cnt)
 
     @staticmethod
     def circularity(mask):
@@ -170,7 +170,7 @@ class Masks:
         """
         cnt = Masks.extract_contour(mask)
 
-        return Contours.feret_angle(cnt)
+        return Contours.orientation(cnt)
 
     @staticmethod
     def eccentricity(mask, screen=False):
