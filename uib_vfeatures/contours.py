@@ -123,6 +123,7 @@ class Contours:
         :return:
         """
         (_, _), (_, major), _ = cv2.fitEllipse(contour)
+
         return major
 
     @staticmethod

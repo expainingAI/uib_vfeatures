@@ -350,6 +350,9 @@ class Masks:
         if len(contours) > 10:
             raise ValueError('Too many contours, image is not of a only object mask')
 
+        if len(contours) == 0:
+            raise ValueError("0 contours found: the image doesn't have any object")
+
         return contours[0]
 
     @staticmethod
