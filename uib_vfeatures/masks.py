@@ -345,7 +345,7 @@ class Masks:
         if len(mask.shape) != 2:
             raise ValueError('Image is not a maks, multiples channels of color')
 
-        _, contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
         if len(contours) > 10:
             raise ValueError('Too many contours, image is not of a only object mask')
@@ -354,52 +354,3 @@ class Masks:
             raise ValueError("0 contours found: the image doesn't have any object")
 
         return contours[0]
-
-    @staticmethod
-    def mean_sdv_lab(img, channel=0):
-        """
-        Calc the mean an the standard desviation of a channel of a CIE-LAB image
-        :param img: Image with three channels
-        :param channel: 0 => all three, 1 => L , 2 => A, 3 => B
-        :return:
-        """
-        img_lab = cv2.cvtColor(img, cv2.COLOR_RGB2LAB)
-
-        return Masks.mean_sdv(img_lab, channel)
-
-    @staticmethod
-    def mean_sdv_rgb(img, channel=0):
-        """
-        Calc the mean an the standard desviation of a channel of a RGB image
-        :param img: Image with three channels
-        :param channel: 0 => all three, 1 => L , 2 => A, 3 => B
-        :return:
-        """
-        return Masks.mean_sdv(img, channel)
-
-    @staticmethod
-    def mean_sdv_hsv(img, channel=0):
-        """
-        Calc the mean an the standard desviation of a channel of a HSV image
-        :param img: Image with three channels
-        :param channel: 0 => all three, 1 => L , 2 => A, 3 => B
-        :return:
-        """
-        img_lab = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
-
-        return Masks.mean_sdv(img_lab, channel)
-
-    @staticmethod
-    def mean_sdv(img, channel=0):
-        if channel != 0:
-            if channel == 1:
-                chann, _, _ = cv2.split(img)
-            elif channel == 2:
-                _, chann, _ = cv2.split(img)
-            else:
-                _, _, chann = cv2.split(img)
-
-        else:
-            chann = copy(img)
-
-        return cv2.meanStdDev(chann)
