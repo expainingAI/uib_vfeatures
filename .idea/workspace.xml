@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f0656f2-3579-4de5-96c8-fb6896089c72" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/uib_vfeatures/color.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/features.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/features.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uib_vfeatures/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/uib_vfeatures/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uib_vfeatures/masks.py" beforeDir="false" afterPath="$PROJECT_DIR$/uib_vfeatures/masks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uib_vfeatures/color.py" beforeDir="false" afterPath="$PROJECT_DIR$/uib_vfeatures/color.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,8 +55,16 @@
       <workItem from="1557474964634" duration="16000" />
       <workItem from="1560927710881" duration="609000" />
       <workItem from="1570780994229" duration="874000" />
-      <workItem from="1571211439379" duration="3909000" />
+      <workItem from="1571211439379" duration="8529000" />
     </task>
+    <task id="LOCAL-00001" summary="Splitted in differents files the morphological and the colour features">
+      <created>1571215609850</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1571215609850</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -93,5 +96,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Splitted in differents files the morphological and the colour features" />
+    <option name="LAST_COMMIT_MESSAGE" value="Splitted in differents files the morphological and the colour features" />
   </component>
 </project>

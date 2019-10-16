@@ -62,20 +62,33 @@ class Color:
         return cv2.meanStdDev(chann)
 
     @staticmethod
-    def clusters_colors(images: np.ndarray, masks: np.ndarray, n_clusters: int,
+    def dominant_colors(image: np.ndarray, mask: np.ndarray, n_colors: int,
                         random_start: int = 42):
+        """
+        @brief Get the dominants colors of an image.
+
+        :param image:
+        :param mask:
+        :param n_colors:
+        :param random_start:
+        :return:
+        """
+        hue, saturation, value = cv2.split(image)
+
         train = []
-        for image, mask in zip(images, masks):
-            hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-            hue, _, _ = cv2.split(hsv)
 
-            pixels = hue[mask == 1]
-            train.append(pixels.flatten())
+        for x in range(0, hue.shape[0]):
+            for y in range(0, hue.shape[1]):
+                if mask[x][y] == 1:
+                    if train is None:
+                        train = np.array([hue[x][y], saturation[x][y], value[x][y]])
+                    else:
+                        train.append(np.array([hue[x][y], saturation[x][y], value[x][y]]))
 
-        kmeans = cluster.KMeans(n_clusters=n_clusters, random_state=random_start)
-        pixels_clusters = kmeans.fit_transform(np.ndarray(train))
+        kmeans = cluster.KMeans(n_clusters=n_colors, random_state=random_start)
+        clusters = kmeans.fit_predict(np.array(train))
 
-        _, importance = np.unique(pixels_clusters, return_counts=True)
+        _, importance = np.unique(clusters, return_counts=True)
 
         importance = importance / sum(importance)
 
