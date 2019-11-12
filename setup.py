@@ -1,7 +1,8 @@
+# coding=utf-8
 from setuptools import setup
 
 setup(name='uib_vfeatures',
-      version='0.1.3',
+      version='0.2.3',
       description='Vision features of generalistic use',
       url='https://gitlab.com/miquelca32/features',
       author="Miquel Miró Nicolau, Bernat Galmés Rubert, Dr. Gabriel Moyà Alcover",

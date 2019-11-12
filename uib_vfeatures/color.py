@@ -93,3 +93,4 @@ class Color:
         importance = importance / sum(importance)
 
         return zip(kmeans.cluster_centers_, importance)
+
