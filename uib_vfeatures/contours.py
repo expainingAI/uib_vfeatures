@@ -64,6 +64,16 @@ class Contours:
         return cv2.contourArea(Contours.convex_hull(contour))
 
     @staticmethod
+    def _bounding_box(contour):
+        """
+        Calculate the bounding box of a contour.
+
+        """
+        contours_poly = cv2.approxPolyDP(contour, 3, True)
+
+        return cv2.boundingRect(contours_poly)
+
+    @staticmethod
     def bounding_box_area(contour):
         """
         @brief Calculates the area of the bounding box of the contour.
@@ -71,16 +81,17 @@ class Contours:
         :param contour:
         :return:
         """
-        return Contours.major_axis(contour) * Contours.minor_axis(contour)
+        x, y, w, h = Contours._bounding_box(contour)
+
+        return (x + w) * (y + h)
 
     @staticmethod
     def rectangularity(contour):
         """
         @brief Calculates the proportion between the real area of the contour and the bounding box
 
-        The bounding box is the minimum rectangle that
+        Ratio of area of the object to itsbounding box area
 
-        :param contour: 1 channel image
         :return:
         """
         return Contours.area(contour) / Contours.bounding_box_area(contour)
@@ -158,7 +169,8 @@ class Contours:
         :param contour: 1 channel image
         :return:
         """
-        return round(4 * Contours.area(contour) / (math.pi * Contours.major_axis(contour) * Contours.major_axis(contour)), 2)
+        return round(4 * Contours.area(contour) / (
+                math.pi * Contours.major_axis(contour) * Contours.major_axis(contour)), 2)
 
     @staticmethod
     def circularity(contour):
@@ -168,7 +180,8 @@ class Contours:
         :param contour:
         :return:
         """
-        return round(4 * math.pi * Contours.area(contour) / (Contours.perimeter(contour) * Contours.perimeter(contour)),
+        return round(4 * math.pi * Contours.area(contour) / (
+                Contours.perimeter(contour) * Contours.perimeter(contour)),
                      2)
 
     @staticmethod
@@ -220,7 +233,7 @@ class Contours:
         ;param contour:
         """
 
-        return Contours.area(contour) / math.pi
+        return Contours.perimeter(contour) / math.pi
 
     @staticmethod
     def equivalent_ellipse_area(contour):
@@ -239,7 +252,11 @@ class Contours:
         :param contour:
         :return:
         """
-        return math.sqrt((4 / math.pi * Contours.area(contour)) / Contours.major_axis(contour))
+        return math.sqrt((4 * Contours.area(contour)) / math.pi) / Contours.major_axis(contour)
+
+    @staticmethod
+    def concavity(contour):
+        return Contours.convex_hull_area(contour) - Contours.area(contour)
 
     @staticmethod
     def convexity(contour):
@@ -263,6 +280,15 @@ class Contours:
         return math.pow(Contours.perimeter(contour), 2) / Contours.area(contour)
 
     @staticmethod
+    def shape_factor_1(contour):
+        """
+
+        """
+        x, y, w, h = Contours._bounding_box(contour)
+
+        return min((x + w), (y + h)), max((x + w), (y + h))
+
+    @staticmethod
     def r_factor(contour):
         return Contours.convex_hull_perimeter(contour) / (Contours.major_axis(contour) * math.pi)
 
@@ -282,7 +308,7 @@ class Contours:
         D = math.fabs((ellipse[0][0] - ellipse[1][0]))
         d = math.fabs(ellipse[0][1] - ellipse[1][1])
 
-        return round(D / d, 2)
+        return round((min(d, D) / max(d, D)), 2)
 
     @staticmethod
     def max_feret(contour):
@@ -350,26 +376,32 @@ class Contours:
         p = 0
         q = 1
 
-        while Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[Contours._next_point(p, n)][0],
-                            convex_hull_contour[Contours._next_point(q, n)][0]) > \
-                Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[Contours._next_point(p, n)][0],
+        while Contours._triangle_area(convex_hull_contour[p][0],
+                                      convex_hull_contour[Contours._next_point(p, n)][0],
+                                      convex_hull_contour[Contours._next_point(q, n)][0]) > \
+                Contours._triangle_area(convex_hull_contour[p][0],
+                                        convex_hull_contour[Contours._next_point(p, n)][0],
                                         convex_hull_contour[q][0]):
             q = Contours._next_point(q, n)
 
         while p != p0:
             p = Contours._next_point(p, n)
             listq = [q]
-            while Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[Contours._next_point(p, n)][0],
+            while Contours._triangle_area(convex_hull_contour[p][0],
+                                          convex_hull_contour[Contours._next_point(p, n)][0],
                                           convex_hull_contour[Contours._next_point(q, n)][0]) > \
-                    Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[Contours._next_point(p, n)][0],
+                    Contours._triangle_area(convex_hull_contour[p][0],
+                                            convex_hull_contour[Contours._next_point(p, n)][0],
                                             convex_hull_contour[q][0]):
                 q = Contours._next_point(q, n)
                 listq.append(q)
 
-            if Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[Contours._next_point(p, n)][0],
+            if Contours._triangle_area(convex_hull_contour[p][0],
+                                       convex_hull_contour[Contours._next_point(p, n)][0],
                                        convex_hull_contour[Contours._next_point(q, n)][0]) == \
-                    Contours._triangle_area(convex_hull_contour[p][0], convex_hull_contour[Contours._next_point(p, n)][0],
-                                                                                  convex_hull_contour[q][0]):
+                    Contours._triangle_area(convex_hull_contour[p][0],
+                                            convex_hull_contour[Contours._next_point(p, n)][0],
+                                            convex_hull_contour[q][0]):
                 listq.append(Contours._next_point(q, n))
 
             for i in range(len(listq)):

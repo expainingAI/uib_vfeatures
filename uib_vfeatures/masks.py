@@ -290,7 +290,16 @@ class Masks:
         """
         cnt = Masks.extract_contour(mask)
 
-        return cv2.contourArea(cnt)
+        return Contours.area(cnt)
+
+    @staticmethod
+    def shape_factor_1(mask):
+        """
+
+        """
+        cnt = Masks.extract_contour(mask)
+
+        Contours.shape_factor_1(cnt)
 
     @staticmethod
     def convexity(mask):

@@ -1,6 +1,6 @@
 from .contours import Contours
 from .masks import Masks
-from .texture import texture_features
+from .texture import Texture
 from .color import Color
 import cv2
 
