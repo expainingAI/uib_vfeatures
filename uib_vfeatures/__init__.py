@@ -18,7 +18,8 @@ Features_mask = {'Solidity': Masks.solidity, 'CH Perimeter': Masks.convex_hull_p
                  'Equivalent elipse area': Masks.equivalent_ellipse_area,
                  'Compactness': Masks.compactness, 'Area': Masks.area, 'Convexity': Masks.convexity,
                  'Shape': Masks.shape, 'Perimeter': Masks.perimeter,
-                 "Bounding_box_area": Masks.bounding_box_area
+                 "Bounding_box_area": Masks.bounding_box_area,
+                 "Shape Factor 1": Masks.shape_factor_1
                  }
 
 Color_features = {"lab": (Color.mean_sdv_lab, cv2.COLOR_BGR2LAB),

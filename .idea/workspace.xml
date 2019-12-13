@@ -76,7 +76,7 @@
       <workItem from="1575965790566" duration="334000" />
       <workItem from="1575966156872" duration="23000" />
       <workItem from="1576163106795" duration="1485000" />
-      <workItem from="1576227321051" duration="1216000" />
+      <workItem from="1576227321051" duration="1602000" />
     </task>
     <task id="LOCAL-00001" summary="Splitted in differents files the morphological and the colour features">
       <created>1571215609850</created>
@@ -113,7 +113,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576164391036</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fixed a bug in the bounding box area calculation">
+      <created>1576229066629</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1576229066629</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,20 +169,23 @@
     <MESSAGE value="Added a color iterator" />
     <MESSAGE value="Added a texture feautres: kurtosis and skew" />
     <MESSAGE value="fixed some features" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed some features" />
+    <MESSAGE value="Fixed a bug in the bounding box area calculation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed a bug in the bounding box area calculation" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="560" y="150" width="860" height="814" key="CommitChangelistDialog2" timestamp="1576164390912">
-      <screen x="70" y="27" width="1850" height="1053" />
+    <state x="2429" y="126" width="860" height="814" key="CommitChangelistDialog2" timestamp="1576229066472">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
+    <state x="2429" y="126" key="CommitChangelistDialog2/70.27.1850.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576229066472" />
     <state x="560" y="150" width="860" height="814" key="CommitChangelistDialog2/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1576164390912" />
     <state x="778" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1576164567650">
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
     <state x="778" y="311" width="424" height="491" key="FileChooserDialogImpl/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1576164567650" />
-    <state x="590" y="289" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1576164392982">
-      <screen x="70" y="27" width="1850" height="1053" />
+    <state x="2460" y="269" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1576229067990">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
+    <state x="2460" y="269" key="Vcs.Push.Dialog.v2/70.27.1850.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576229067990" />
     <state x="590" y="289" width="800" height="535" key="Vcs.Push.Dialog.v2/70.27.1850.1053/1920.0.1920.1080@70.27.1850.1053" timestamp="1576164392982" />
     <state x="658" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1575966162495">
       <screen x="70" y="27" width="1850" height="1053" />
