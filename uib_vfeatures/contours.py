@@ -81,9 +81,9 @@ class Contours:
         :param contour:
         :return:
         """
-        x, y, w, h = Contours._bounding_box(contour)
+        _, _, w, h = Contours._bounding_box(contour)
 
-        return (x + w) * (y + h)
+        return w * h
 
     @staticmethod
     def rectangularity(contour):

@@ -1,8 +1,14 @@
 # coding=utf-8
 from setuptools import setup
+from os import path
+this_directory = path.abspath(path.dirname(__file__))
+
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
 
 setup(name='uib_vfeatures',
-      version='0.5',
+      version='0.5.1',
       description='Vision features of generalistic use',
       url='https://gitlab.com/miquelca32/features',
       author="Miquel Miró Nicolau, Bernat Galmés Rubert, Dr. Gabriel Moyà Alcover",
@@ -18,4 +24,6 @@ setup(name='uib_vfeatures',
           'scikit-image',
           'numpy'
       ],
+      long_description=long_description,
+      long_description_content_type='text/markdown',
       zip_safe=False)
