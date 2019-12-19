@@ -286,7 +286,7 @@ class Contours:
         """
         _, _, w, h = Contours._bounding_box(contour)
 
-        return min(w, h), max(w, h)
+        return min(w, h) / max(w, h)
 
     @staticmethod
     def r_factor(contour):
