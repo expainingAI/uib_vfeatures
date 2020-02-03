@@ -18,7 +18,7 @@ setup(name='uib_vfeatures',
       keywords=['Features extraction', 'Machine Learning', 'Computer Vision'],
       install_requires=[
           'scikit-image',
-          'opencv-python==4.1.1.26',
+          'opencv-python',
           'matplotlib',
           'scipy',
           'scikit-image',
