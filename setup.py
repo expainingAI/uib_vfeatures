@@ -8,7 +8,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 
 setup(name='uib_vfeatures',
-      version='0.5.2',
+      version='0.5.3',
       description='Vision features of generalistic use',
       url='https://gitlab.com/miquelca32/features',
       author="Miquel Miró Nicolau, Bernat Galmés Rubert, Dr. Gabriel Moyà Alcover",
@@ -18,7 +18,7 @@ setup(name='uib_vfeatures',
       keywords=['Features extraction', 'Machine Learning', 'Computer Vision'],
       install_requires=[
           'scikit-image',
-          'opencv-python==4.1.1.26',
+          'opencv-python',
           'matplotlib',
           'scipy',
           'scikit-image',

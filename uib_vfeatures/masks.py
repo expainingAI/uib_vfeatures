@@ -299,7 +299,7 @@ class Masks:
         """
         cnt = Masks.extract_contour(mask)
 
-        Contours.shape_factor_1(cnt)
+        return Contours.shape_factor_1(cnt)
 
     @staticmethod
     def convexity(mask):
