@@ -8,7 +8,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 
 setup(name='uib_vfeatures',
-      version='0.5.3',
+      version='0.5.4',
       description='Vision features of generalistic use',
       url='https://gitlab.com/miquelca32/features',
       author="Miquel Miró Nicolau, Bernat Galmés Rubert, Dr. Gabriel Moyà Alcover",

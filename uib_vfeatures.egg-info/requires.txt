@@ -1,5 +1,5 @@
 scikit-image
-opencv-python==4.1.1.26
+opencv-python
 matplotlib
 scipy
 scikit-image

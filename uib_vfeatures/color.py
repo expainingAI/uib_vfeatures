@@ -94,3 +94,15 @@ class Color:
 
         return zip(kmeans.cluster_centers_, importance)
 
+    @staticmethod
+    def color_bins(image: np.ndarray, mask: np.ndarray, n_colors: int):
+        channels = cv2.split(image)
+        histograms = []
+
+        for c in channels:
+            chann_masked = c[mask]
+            histogram, _ = np.histogram(chann_masked, bins=n_colors)
+
+            histograms = histograms + histogram
+
+        return histograms

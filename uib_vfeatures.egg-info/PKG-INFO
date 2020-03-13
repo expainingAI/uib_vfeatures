@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: uib-vfeatures
-Version: 0.5.2
+Version: 0.5.4
 Summary: Vision features of generalistic use
 Home-page: https://gitlab.com/miquelca32/features
 Author: Miquel Miró Nicolau, Bernat Galmés Rubert, Dr. Gabriel Moyà Alcover
@@ -34,7 +34,7 @@ Description: # UIB - V Features
         
         ### Morphological
         
-        #####All this features are in the iterator
+        ##### All this features are in the iterator
         
         *   Solidity
         *   Convex hull perimeter
