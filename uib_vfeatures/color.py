@@ -96,6 +96,17 @@ class Color:
 
     @staticmethod
     def color_bins(image: np.ndarray, mask: np.ndarray, n_colors: int):
+        """
+        @brief Calculate an histogram of color for every channel.
+
+        Color images are a combination of three images or channels. For every channel we will
+        calculate the histogram and concatenate them.
+
+        :param image: Numpy array of a color image
+        :param mask: Numpy array of a binary image
+        :param n_colors: Integer. Number of bins for channel
+        :return: histogram. A numpy array with shape n_color * 3
+        """
         channels = cv2.split(image)
         histograms = []
 
@@ -103,6 +114,6 @@ class Color:
             chann_masked = c[mask]
             histogram, _ = np.histogram(chann_masked, bins=n_colors)
 
-            histograms = histograms + histogram
+            histograms = np.vstack(histograms, histogram)
 
         return histograms
