@@ -108,12 +108,6 @@ class Color:
         :return: histogram. A numpy array with shape n_color * 3
         """
         channels = cv2.split(image)
-        histograms = []
+        histograms = [np.histogram(c[mask], bins=n_colors)[0] for c in channels]
 
-        for c in channels:
-            chann_masked = c[mask]
-            histogram, _ = np.histogram(chann_masked, bins=n_colors)
-
-            histograms = np.vstack(histograms, histogram)
-
-        return histograms
+        return np.hstack(histograms)
