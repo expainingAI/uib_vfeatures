@@ -3,9 +3,6 @@
 </div>
 
 
-# UIB - V Features
-
-
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/uib-vfeatures)
 [![PyPI version](https://badge.fury.io/py/uib-vfeatures.svg)](https://badge.fury.io/py/uib-vfeatures)
 
