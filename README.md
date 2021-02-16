@@ -112,3 +112,22 @@ for key, func in features.items():
 
 ```
 As a result we had a dicctionary of the form *{'Feature_name': value}*
+
+### Citation
+
+If you use this code, please cite
+
+```
+@article{PETROVIC2020104027,
+    title = {Sickle-cell disease diagnosis support selecting the most appropriate machine learning method: Towards a general and interpretable approach for cell morphology analysis from microscopy images},
+    author = {Nataša Petrović and Gabriel Moyà-Alcover and Antoni Jaume-i-Capó and Manuel González-Hidalgo},
+    journal = {Computers in Biology and Medicine},
+    volume = {126},
+    pages = {104027},
+    year = {2020},
+    issn = {0010-4825},
+    doi = {https://doi.org/10.1016/j.compbiomed.2020.104027},
+    url = {https://www.sciencedirect.com/science/article/pii/S0010482520303589}
+}
+
+```
