@@ -1,32 +1,37 @@
+<div align="center">
+  <img src="http://ugivia.uib.es/wp-content/uploads/2021/02/uib-vfeatures.png">
+</div>
+
+
 # UIB - V Features
+
+
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/uib-vfeatures)
+[![PyPI version](https://badge.fury.io/py/uib-vfeatures.svg)](https://badge.fury.io/py/uib-vfeatures)
+
 
 ## Introduction 
 
-*UIB - V Features* provide a set of useful features. With three types of features: morphological, texture 
-and color. All the features can be used with mask or with the contours. Every feature is a numerical value 
-that used in ML can improve their results. 
- 
-The morphological features are all grouped in one iterator, so you can calculate all the features inside 
-a loop easily.
+**UIB - V Features** is a library to extract useful features of different types(morphological, texture 
+and color). To increase the flexibility of the library all functions can be used with masks or contours. 
 
-The library use mask and contours. Masks are two value image, where the object has a value diferent than the rest of 
-the image. A contour is a 2D vector of points that define a contour. To calculate a contour normally is used the OpenCV
-function.
+UIB - V Features was originally developed by researchers of [UGIVIA](http://ugivia.uib.es/). This research group
+is centered on computer vision and artificial intelligence. 
+
+All the features available are grouped in one iterator to simplify the use of this library.
 
 ### Installation
 
 Install the library is very simple with pip
 
 ```
-pip install uib-vfeatures
-``` 
+$ pip install uib-vfeatures
+```
 
 ---
 ## List of features
 
 ### Morphological
-
-##### All this features are in the iterator
 
 *   Solidity
 *   Convex hull perimeter
@@ -62,12 +67,6 @@ pip install uib-vfeatures
 *   Standard deviation of the RGB channels
 *   Standard deviation of the HSV channels
 
-
-### Textures
-
-The texture features depends on the parameter of a unique function. The first two parameter define the texture,
-with the distance and the angle of the texture. The third defines the feature to extract and the last one is 
-a grey-scale image.
 
 #### Texture features
 
