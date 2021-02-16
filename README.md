@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="http://ugivia.uib.es/wp-content/uploads/2021/02/uib-vfeatures.png">
+  <img src="https://raw.githubusercontent.com/explainingAI/uib_vfeatures/master/docs/uib-vfeatures.png">
 </div>
 
 
@@ -10,7 +10,6 @@
 [![PyPI version](https://badge.fury.io/py/uib-vfeatures.svg)](https://badge.fury.io/py/uib-vfeatures)
 
 
-## Introduction 
 
 **UIB - V Features** is a library to extract useful features of different types(morphological, texture 
 and color). To increase the flexibility of the library all functions can be used with masks or contours. 
