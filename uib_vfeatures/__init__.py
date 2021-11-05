@@ -1,8 +1,9 @@
+import cv2
+
 from .contours import Contours
 from .masks import Masks
 from .texture import Texture
 from .color import Color
-import cv2
 
 Features_mask = {'Solidity': Masks.solidity, 'CH Perimeter': Masks.convex_hull_perimeter,
                  'CH Area': Masks.convex_hull_area, 'BB Area': Masks.bounding_box_area,

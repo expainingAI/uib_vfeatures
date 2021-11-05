@@ -1,73 +1,90 @@
-import cv2
+# -*- coding: utf-8 -*-
+""" Module containing the Contours class.
+
+This module contains the Contours class , which is used to handle contours and obtain their
+features.
+
+"""
+
 import math
+
+import cv2
 import numpy as np
 
 
 class Contours:
     @staticmethod
     def area(contour):
-        """
-        @brief Calculates a contour area
+        """ Calculates the area of the contour.
 
-        The function computes a contour area. Similarly to moments , the area is computed using the Green
-        formula. The function will most certainly give a wrong
-        results for contours with self-intersections.
+        Args:
+            contour: List of points defining the contour
 
-        :param contour:
-        :return:
+        Returns:
+            Area of the contour
         """
         return cv2.contourArea(contour)
 
     @staticmethod
     def perimeter(contour):
-        """
-        @brief Calculates a contour perimeter
+        """ Calculates the perimeter of the contour.
 
-        The function computes a closed contour perimeter.
+        Args:
+            contour: List of points defining the contour
 
-        :param contour: Input vector of 2D points, stored in std::vector or Mat
-        :return:
+        Returns:
+            Perimeter of the contour
         """
         return cv2.arcLength(contour, True)
 
     @staticmethod
     def convex_hull(contour):
-        """
-        @brief Finds the convex hull of a point set.
+        """ Calculates the convex hull of the contour.
 
-        The functions find the convex hull of a 2D point set using the Sklansky's algorithm that has O(N logN)
-        complexity in the current implementation on OpenCV.
+        This function is used to calculate the convex hull of the contour, using the Sklansky's
+        algorithm. This algorithm has a complexity of O(n log n), where n is the number of points in
+        the contour.
 
-        :param contour: Input 2D point set, stored in std::vector or Mat
-        :return set of points:
+        Args:
+            contour: Input contour with a list of points.
+
+        Returns:
+            Convex hull of the contour
         """
         return cv2.convexHull(contour)
 
     @staticmethod
     def convex_hull_perimeter(contour):
-        """
-        @brief Finds the perimeter of the convex-hull.
+        """ Calculates the perimeter of the convex hull of the contour.
 
-        :param contour:
-        :return:
+        Args:
+            contour: List of points defining the contour
+
+        Returns:
+            Perimeter of the convex hull of the contour
         """
         return Contours.perimeter(Contours.convex_hull(contour))
 
     @staticmethod
     def convex_hull_area(contour):
-        """
-        Calculates the area of the convex hull from the contour, using the same function that the area of any object.
+        """ Calculates the area of the convex hull of the contour.
 
-        :param contour:
-        :return:
+        Args:
+            contour: List of points defining the contour
+
+        Returns:
+            Area of the convex hull of the contour
         """
         return cv2.contourArea(Contours.convex_hull(contour))
 
     @staticmethod
     def _bounding_box(contour):
-        """
-        Calculate the bounding box of a contour.
+        """ Calculate the bounding box of a contour.
 
+        Args:
+            contour: List of points defining the contour
+        Returns:
+            Bounding box of the contour
         """
         contours_poly = cv2.approxPolyDP(contour, 3, True)
 
@@ -75,11 +92,13 @@ class Contours:
 
     @staticmethod
     def bounding_box_area(contour):
-        """
-        @brief Calculates the area of the bounding box of the contour.
+        """ Calculates the area of the bounding box of the contour.
 
-        :param contour:
-        :return:
+        Args:
+            contour: List of points defining the contour
+
+        Returns:
+            Area of the bounding box of the contour
         """
         _, _, w, h = Contours._bounding_box(contour)
 
@@ -87,33 +106,40 @@ class Contours:
 
     @staticmethod
     def rectangularity(contour):
-        """
-        @brief Calculates the proportion between the real area of the contour and the bounding box
+        """ Calculates the rectangularity of the contour.
 
-        Ratio of area of the object to itsbounding box area
+        Calculates the proportion between the real area of the contour and the bounding box. Ratio
+        of area of the object to itsbounding box area
 
-        :return:
+        Args:
+            contour: List of points defining the contour
+
+        Returns:
+
         """
         return Contours.area(contour) / Contours.bounding_box_area(contour)
 
     @staticmethod
     def max_r(contour):
-        """
-        @brief Calculates the radius of the enclosing circle of the contour
+        """ Calculates the radius of the minimum inscribed circle of the contour.
 
-        :param contour:
-        :return:
+        Args:
+            contour: Contour with a list of points
+
+        Returns:
+            Radius of the minimum inscribed circle of the contour
         """
         (_, _), radius = cv2.minEnclosingCircle(contour)
         return radius
 
     @staticmethod
     def min_r(contour):
-        """
-        @brief Calculates the radius of the maximum inscribed circle of the contour
+        """ Calculates the radius of the minimum inscribed circle of the contour.
 
-        :param contour:
-        :return:
+        Args:
+            contour: Contour with a list of points
+        Returns:
+            Radius of the minimum inscribed circle of the contour
         """
         _, _, width, height = cv2.boundingRect(contour)
         width = int(width) * 2
@@ -127,11 +153,13 @@ class Contours:
 
     @staticmethod
     def major_axis(contour):
-        """
-        @brief Calculates the major axis of the enclosing ellipse of the contour
+        """ Calculates the major axis of the minimum inscribed circle of the contour.
 
-        :param contour:
-        :return:
+        Args:
+            contour: Contour with a list of points
+
+        Returns:
+            Major axis of the minimum inscribed circle of the contour
         """
         (_, _), (_, major), _ = cv2.fitEllipse(contour)
 
@@ -139,150 +167,194 @@ class Contours:
 
     @staticmethod
     def minor_axis(contour):
-        """
-        @brief Calculates the minor axis of the ellipse from the contour
+        """ Calculates the minor axis of the minimum inscribed circle of the contour.
 
-        :param contour:
-        :return:
+        Args:
+            contour: Contour with a list of points
+
+        Returns:
+            Minor axis of the minimum inscribed circle of the contour
         """
         (_, _), (minor, _), _ = cv2.fitEllipse(contour)
+
         return minor
 
     @staticmethod
     def orientation(contour):
-        """
-        @brief Find the angle orientation of the enclosing ellipse
+        """ Calculates the orientation of the minimum inscribed circle of the contour.
 
-        :param contour:
-        :return:
-        """
+        Args:
+            contour: Contour with a list of points
 
-        (_, _), (_, _), angle = cv2.fitEllipse(contour)
-        return angle
+        Returns:
+            Orientation of the minimum inscribed circle of the contour
+        """
+        (_, _), (_, _), orientation = cv2.fitEllipse(contour)
+
+        return orientation
 
     @staticmethod
     def roundness(contour):
-        """
-        Circularity corrected by the aspect ratio
+        """ Circularity of the contour corrected by the aspect ratio.
 
-        ref : https://progearthplanetsci.springeropen.com/articles/10.1186/s40645-015-0078-x
-        :param contour: 1 channel image
-        :return:
+        Refs:
+            https://progearthplanetsci.springeropen.com/articles/10.1186/s40645-015-0078-x
+
+        Args:
+            contour: Contour defined by a list of points
+
+        Returns:
+            Circularity of the contour corrected by the aspect ratio
         """
         return round(4 * Contours.area(contour) / (
                 math.pi * Contours.major_axis(contour) * Contours.major_axis(contour)), 2)
 
     @staticmethod
     def circularity(contour):
-        """
-        @brief Calc the likeliness of an object to a circle
+        """ Circularity of the contour corrected by the aspect ratio.
 
-        :param contour:
-        :return:
+        Args:
+            contour: Contour defined by a list of points
+
+        Returns:
+            Circularity of the contour corrected by the aspect ratio
         """
-        return round(4 * math.pi * Contours.area(contour) / (
-                Contours.perimeter(contour) * Contours.perimeter(contour)),
-                     2)
+        return round(4 * math.pi * Contours.area(contour) / (Contours.perimeter(contour) *
+                                                             Contours.perimeter(contour)), 2)
 
     @staticmethod
     def solidity(contour):
-        """
-        @brief Calc the proportion between the area of the contour and the convex-hull
+        """ Calculates the solidity of the contour.
 
-        :param contour:
-        :return:
-        """
+        Args:
+            contour: Contour defined by a list of points
 
+        Returns:
+            Solidity of the contour
+        """
         return round(Contours.area(contour) / Contours.convex_hull_area(contour), 2)
 
     @staticmethod
     def sphericity(contour):
-        """
-        @brief Proportion between the major diagonal and the minor diagonal
+        """ Calculates the sphericity of the contour.
 
-        :param contour:
-        :return:
-        """
+        Args:
+            contour: Contour defined by a list of points
 
+        Returns:
+            Sphericity of the contour
+        """
         return Contours.min_r(contour) / Contours.max_r(contour)
 
     @staticmethod
     def aspect_ratio(contour):
-        """
-        @brief Proportional relationship between its width and it's height
-        :param contour:
-        :return:
+        """ Calculates the aspect ratio of the contour.
+
+        Args:
+            contour: Contour defined by a list of points
+
+        Returns:
+            Aspect ratio of the contour
         """
 
         return round(Contours.major_axis(contour) / Contours.minor_axis(contour), 2)
 
     @staticmethod
     def area_equivalent_diameter(contour):
-        """
-        @brief The diamater of the real area of the contour
-        :param contour:
-        :return:
+        """ Calculates the area equivalent diameter of the contour.
+
+        Args:
+            contour: Contour defined by a list of points
+
+        Returns:
+            The diameter of the contour of the real area
         """
 
         return math.sqrt((4 / math.pi) * Contours.area(contour))
 
     @staticmethod
     def perimeter_equivalent_diameter(contour):
-        """
-        @brief The diameter of the real perimeter of the contour
-        ;param contour:
+        """ Calculates the perimeter equivalent diameter of the contour.
+
+        Args:
+            contour: Contour defined by a list of points
+        Returns:
+            The diameter of the contour of the real perimeter
         """
 
         return Contours.perimeter(contour) / math.pi
 
     @staticmethod
     def equivalent_ellipse_area(contour):
-        """
-        @brief The area of the equivalent ellipse
-        :param contour:
-        :return:
+        """ Equivalent ellipse area of the contour.
+
+        Args:
+            contour: Contour defined by a list of points
+
+        Returns:
+            The area of the equivalent ellipse of the contour
         """
         return math.pi * Contours.major_axis(contour) * Contours.minor_axis(contour)
 
     @staticmethod
     def compactness(contour):
-        """
-        @brief Proportion between area and the shape of the ellipse
+        """ Calculates the compactness of the contour.
 
-        :param contour:
-        :return:
+        Args:
+            contour: Contour defined by a list of points
+
+        Returns:
+            The compactness of the contour
         """
         return math.sqrt((4 * Contours.area(contour)) / math.pi) / Contours.major_axis(contour)
 
     @staticmethod
     def concavity(contour):
+        """ Calculates the concavity of the contour.
+
+        Args:
+            contour: Contour defined by a list of points
+
+        Returns:
+            The concavity of the contour
+        """
         return Contours.convex_hull_area(contour) - Contours.area(contour)
 
     @staticmethod
     def convexity(contour):
-        """
-        @brief Calc the convexity of the contour
+        """ Calculates the convexity of the contour.
 
-        The convexity is a measure of the curvature of an object. Is calc by the relation between the perimeter of
-        the convex hull and the perimeter of the object.
-        :param contour:
-        :return:
+        The convexity is a measure of the curvature of an object. Is calc by the relation between
+        the perimeter of the convex hull and the perimeter of the object.
+
+        Args:
+            contour: Contour defined by a list of points
+        Returns:
+            The convexity of the contour
         """
         return Contours.convex_hull_perimeter(contour) / Contours.perimeter(contour)
 
     @staticmethod
     def shape(contour):
-        """
+        """ Calculates the shape of the contour.
+
         Relation between perimeter and area. Calc the elongation of an object
-        :param contour:
-        :return:
+
+        Args:
+            contour: Contour defined by a list of points
+        Returns:
+            The shape of the contour
         """
         return math.pow(Contours.perimeter(contour), 2) / Contours.area(contour)
 
     @staticmethod
     def shape_factor_1(contour):
-        """
+        """ Calculates the shape factor 1 of the contour.
 
+        Args:
+            contour: Contour defined by a list of points
+        Returns:
+            The shape factor 1 of the contour
         """
         _, _, w, h = Contours._bounding_box(contour)
 
@@ -290,19 +362,30 @@ class Contours:
 
     @staticmethod
     def r_factor(contour):
+        """ Calculates the r factor of the contour.
+
+        Args:
+            contour: Contour defined by a list of points
+
+        Returns:
+            The r factor of the contour
+        """
         return Contours.convex_hull_perimeter(contour) / (Contours.major_axis(contour) * math.pi)
 
     @staticmethod
     def eccentricity(contour):
-        """
-        @brief Calc how much the conic section deviates from being circular
+        """ Calculates the eccentricity of the contour.
 
-        For any point of a conic section, the distance between a fixed point F and a fixed straight line l is always
-        equal to a positive constant, the eccentricity. Is calculed by the relation between the two diagonals of the
-        elipse.
+        Calc how much the conic section deviates from being circular. For any point of a conic
+        section, the distance between a fixed point F and a fixed straight line l is always equal
+        to a positive constant, the eccentricity. Is calculed by the relation between the two
+        diagonals of the ellipse.
 
-        :param contour:
-        :return:
+        Args:
+            contour: Contour defined by a list of points
+
+        Returns:
+            Ecentricity of the contour
         """
         ellipse = cv2.fitEllipse(contour)
         D = math.fabs((ellipse[0][0] - ellipse[1][0]))
@@ -312,61 +395,92 @@ class Contours:
 
     @staticmethod
     def max_feret(contour):
-        """
+        """ The maximum Feret diameter of the contour.
+
         The maximum distance between parallel tangents to the projection area of the contour
-        :param contour:
-        :return:
+
+        Args:
+            contour: Contour defined by a list of points
+
+        Returns:
+            The maximum Feret diameter of the contour
         """
         feret, _ = Contours._max_min_feret(contour)
         return feret
 
     @staticmethod
     def min_feret(contour):
-        """
+        """ Calculate minimum Feret diameter of the contour.
+
         The minimum distance between parallel tangents to the projection area of the contour
-        :param contour:
-        :return:
+
+        Args:
+            contour: Contour defined by a list of points
+
+        Returns:
+
         """
         _, feret = Contours._max_min_feret(contour)
         return feret
 
     @staticmethod
     def elongation(contour):
-        """
+        """ Calculate the elongation of the contour.
+
         Relation between maximum and minimum feret of the contour.
-        :param contour:
-        :return:
+
+        Args:
+            contour: Contour defined by a list of points
+
+        Returns:
+            The elongation of the contour
         """
         return Contours.max_feret(contour) / Contours.min_feret(contour)
 
     @staticmethod
     def hu_moments(contour):
+        """ Calculate the Hu moments of the contour.
+
+        Args:
+            contour: Contour defined by a list of points
+
+        Returns:
+            The Hu moments of the contour
+        """
         return cv2.HuMoments(cv2.moments(contour)).flatten()
 
     @staticmethod
     def center(contour):
+        """ Calculate the center of the contour.
+
+        The centroid of a plane figure is the arithmetic mean of all the point in the figure. For
+        calculate it we use the moments of the image
+
+        Refs:
+            https://en.wikipedia.org/wiki/Image_moment.
+        Args:
+            contour: Contour defined by a list of points
+
+        Returns:
+            The center of the contour
         """
-        @brief Calculate the centroid of a contour
+        moments = cv2.moments(contour)
+        center_x = int(moments['m10'] / moments['m00'])
+        center_y = int(moments['m01'] / moments['m00'])
 
-        The centroid of a plane figure is the arithmetic mean of all the point in the figure. For calculate it we
-        use the moments of the image ( see https://en.wikipedia.org/wiki/Image_moment).
-
-        :param contour:
-        :return:
-        """
-        m = cv2.moments(contour)
-        cx = int(m['m10'] / m['m00'])
-        cy = int(m['m01'] / m['m00'])
-
-        return (cx, cy)
+        return center_x, center_y
 
     @staticmethod
     def _max_min_feret(contour):
-        """
-        Helper method for calculation of maximum and minimum ferets based on convex hull of the contour.
-        Based on C++ code: https://www.crisluengo.net/archives/408
-        :param contour:
-        :return:
+        """ Calculate the maximum and minimum Feret diameter of the contour.
+
+        Helper method for calculation of maximum and minimum ferets based on convex hull of the
+        contour. Based on C++ code: https://www.crisluengo.net/archives/408
+
+        Args:
+            contour: Contour defined by a list of points
+        Returns:
+              Maximum and minimum feret of the contour
         """
         convex_hull_contour = Contours.convex_hull(contour)
         min_feret = 999999
@@ -423,34 +537,47 @@ class Contours:
         return max_feret, min_feret
 
     @staticmethod
-    def _triangle_area(p1, p2, p3):
-        """
+    def _triangle_area(point_1, point_2, point_3):
+        """ Calculate the area of a triangle given by three points.
+
         Helper method that calculates triangle area based on triangle vertices
-        :param p1: First vertex of the triangle
-        :param p2: Second vertex of the triangle
-        :param p3: Third vertex of the triangle
-        :return:
+
+        Args:
+            point_1: First point of the triangle
+            point_2: Second point of the triangle
+            point_3: Third point of the triangle
+
+        Returns:
+            The area of the triangle
         """
-        return ((p2[0] - p1[0]) * (p3[1] - p1[1]) - (p2[1] - p1[1]) * (p3[0] - p1[0])) / 2
+        return ((point_2[0] - point_1[0]) * (point_3[1] - point_1[1]) -
+                (point_2[1] - point_1[1]) * (point_3[0] - point_1[0])) / 2
 
     @staticmethod
-    def _triangle_height(p1, p2, p3):
+    def _triangle_height(point_1, point_2, point_3):
+        """ Calculate the height of a triangle given by three points.
+
+        Args:
+            point_1: First vertex of the triangle
+            point_2: Second vertex of the triangle
+            point_3: Third vertex of the triangle
+
+        Returns:
+            The height of the triangle
         """
-        Helper method that calculates triangle height based on triangle vertices
-        :param p1: First vertex of the triangle
-        :param p2: Second vertex of the triangle
-        :param p3: Third vertex of the triangle
-        :return:
-        """
-        return ((p2[0] - p1[0]) * (p3[1] - p1[1]) - (p2[1] - p1[1]) * (p3[0] - p1[0])) / \
-               math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
+        return ((point_2[0] - point_1[0]) * (point_3[1] - point_1[1]) -
+                (point_2[1] - point_1[1]) * (point_3[0] - point_1[0])) / \
+               math.sqrt((point_1[0] - point_2[0]) ** 2 + (point_1[1] - point_2[1]) ** 2)
 
     @staticmethod
-    def _next_point(p, n):
+    def _next_point(point, n_points):
+        """ Get the next antipodal point in the contour.
+
+        Args:
+            point: Previous point in the contour
+            n_points: Total number of points in the contour
+
+        Returns:
+            The next antipodal point in the contour
         """
-        Helper method that calculates next antipodal point
-        :param p: previous point
-        :param n: total number of points in a contour
-        :return:
-        """
-        return p % n + 1
+        return point % n_points + 1

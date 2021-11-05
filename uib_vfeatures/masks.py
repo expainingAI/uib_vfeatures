@@ -1,19 +1,33 @@
-from matplotlib import pyplot as plt
+# -*- coding: utf-8 -*-
+""" Module containing the Masks class.
+
+The Masks class is used to handle and extract features from masks.
+"""
+
 from copy import copy
+
+from matplotlib import pyplot as plt
 import cv2
-from uib_vfeatures.contours import Contours
 import numpy as np
+
+from uib_vfeatures.contours import Contours
 
 
 class Masks:
+    """ Class to handle and extract features from masks.
+
+    """
 
     @staticmethod
     def solidity(mask, screen=False):
-        """
-        Calculates the proportion between the area of the object in the mask and the convex-hull
-        :param mask: 1 channel image
-        :param screen:
-        :return:
+        """ Calculates the proportion between the area of the object in the mask and the convex-hull
+
+        Args:
+            mask: 1 channel image
+            screen: Boolean if True, shows the mask with the convexity defects.
+
+        Returns:
+            Solidity of the object.
         """
         cnt = Masks.extract_contour(mask)
 
@@ -22,9 +36,9 @@ class Masks:
             defects = cv2.convexityDefects(cnt, hull)
             mask_cp = copy(mask)
             for i in range(defects.shape[0]):
-                s, e, f, d = defects[i, 0]
-                start = tuple(cnt[s][0])
-                end = tuple(cnt[e][0])
+                start, end, _, _ = defects[i, 0]
+                start = tuple(cnt[start][0])
+                end = tuple(cnt[end][0])
                 cv2.line(mask_cp, start, end, [100, 100, 100], 10)
 
             plt.imshow(mask_cp)
@@ -46,11 +60,15 @@ class Masks:
 
     @staticmethod
     def convex_hull_area(mask):
-        """
-        Calculates the area of the convex hull from the contour, using the same function that the area of any object.
+        """ Calculates the area of the convex-hull.
 
-        :param mask: 1 channel image
-        :return:
+        Calculates the area of the convex hull from the contour, using the same function that the
+        area of any object.
+
+        Params:
+            mask: 1 channel image
+        Returns:
+            Convex hull area.
         """
         cnt = Masks.extract_contour(mask)
 
@@ -174,16 +192,18 @@ class Masks:
 
     @staticmethod
     def eccentricity(mask, screen=False):
-        """
-        @brief Calc how much the conic section deviates from being circular
+        """ Calc how much the conic section deviates from being circular
 
-        For any point of a conic section, the distance between a fixed point F and a fixed straight line l is always
-        equal to a positive constant, the eccentricity. Is calculed by the relation between the two diagonals of the
-        elipse.
+        For any point of a conic section, the distance between a fixed point F and a fixed straight
+        line l is always equal to a positive constant, the eccentricity. Is calculed by the relation
+        between the two diagonals of the ellipse.
 
-        :param mask: 1 channel image
-        :param screen:
-        :return:
+        Params:
+            mask: 1 channel image
+            screen: Boolean is true the function will plot the ellipse and the eccentricity.
+
+        Returns:
+            Eccentricity of the contour.
         """
         cnt = Masks.extract_contour(mask)
 
@@ -294,8 +314,13 @@ class Masks:
 
     @staticmethod
     def shape_factor_1(mask):
-        """
+        """ Calculate the shape factor of the contour.
 
+        The shape factor is the ratio between the area of the contour and the area of the convex
+        hull.
+
+        Args:
+            mask: 1 channel image
         """
         cnt = Masks.extract_contour(mask)
 
@@ -303,13 +328,16 @@ class Masks:
 
     @staticmethod
     def convexity(mask):
-        """
-        @brief Calc the convexity of the contour
+        """ Calc the convexity of the contour
 
-        The convexity is a measure of the curvature of an object. Is calc by the relation between the perimeter of
-        the convex hull and the perimeter of the object.
-        :param mask:
-        :return:
+        The convexity is a measure of the curvature of an object. Is calc by the relation between
+        the perimeter of the convex hull and the perimeter of the object.
+
+        Args:
+            mask: 1 channel image
+
+        Returns:
+            Convexity of the contour.
         """
         cnt = Masks.extract_contour(mask)
 
@@ -317,10 +345,15 @@ class Masks:
 
     @staticmethod
     def shape(mask):
-        """
+        """ Calculate the shape factor of the contour
+
         Relation between perimeter and area. Calc the elongation of an object
-        :param mask:
-        :return:
+
+        Args:
+            mask: 1 channel image
+
+        Returns:
+            Shape factor of the contour.
         """
         cnt = Masks.extract_contour(mask)
 
@@ -340,16 +373,19 @@ class Masks:
 
     @staticmethod
     def extract_contour(mask):
-        """
-        @brief Finds contours in a binary image.
+        """ Finds contours in a binary image.
 
-        The function retrieves contours from the binary image using the algorithm @cite Suzuki85 . The contours
-        are a useful tool for shape analysis and object detection and recognition.
+        The function retrieves contours from the binary image using the algorithm @cite Suzuki85.
+        The contours are a useful tool for shape analysis and object detection and recognition.
 
-        @note Source image is not modified by this function.
+        Notes:
+            Source image is not modified by this function.
 
-        :param mask:
-        :return:
+        Params:
+            mask: 1 channel image
+
+        Returns:
+            contours: List of contours
         """
         if len(mask.shape) != 2:
             raise ValueError('Image is not a maks, multiples channels of color')

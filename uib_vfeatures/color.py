@@ -1,17 +1,29 @@
-import cv2
+# -*- coding: utf-8 -*-
+""" Module for color related features.
+
+This package contains functions for color related features.
+
+Written by: Miquel Miró Nicolau (UIB)
+"""
 from copy import copy
+
+import cv2
 import numpy as np
 from sklearn import cluster
 
 
 class Color:
+    """ Class for color related features. """
+
     @staticmethod
     def mean_sdv_lab(img, channel=0):
-        """
-        Calc the mean an the standard desviation of a channel of a CIE-LAB image
-        :param img: Image with three channels
-        :param channel: 0 => all three, 1 => L , 2 => A, 3 => B
-        :return:
+        """ Calc the mean an the standard desviation of a channel of a RGB image
+
+        Args:
+            img: Image with three channels
+            channel: Id of the channel to calculate the mean and the standard desviation
+        Returns:
+            Mean and standard desviation of the channel in LAB
         """
         img_lab = cv2.cvtColor(img, cv2.COLOR_RGB2LAB)
 
@@ -19,71 +31,77 @@ class Color:
 
     @staticmethod
     def mean_sdv_rgb(img, channel=0):
-        """
-        Calc the mean an the standard desviation of a channel of a RGB image
-        :param img: Image with three channels
-        :param channel: 0 => all three, 1 => L , 2 => A, 3 => B
-        :return:
+        """ Calc the mean an the standard desviation of a channel of a RGB image
+
+        Args:
+            img: Image with three channels
+            channel: Id of the channel to calculate the mean and the standard desviation
+
+        Returns:
+            Mean and standard desviation of the channel in RGB
         """
         return Color.mean_sdv(img, channel)
 
     @staticmethod
     def mean_sdv_hsv(img, channel=0):
-        """
-        Calc the mean an the standard desviation of a channel of a HSV image
-        :param img: Image with three channels
-        :param channel: 0 => all three, 1 => L , 2 => A, 3 => B
-        :return:
-        """
-        img_lab = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
+        """ Calc the mean an the standard desviation of a channel of a RGB image
 
-        return Color.mean_sdv(img_lab, channel)
+        Args:
+            img: Image with three channels
+            channel: Id of the channel to calculate the mean and the standard desviation
+        Returns:
+            Mean and standard desviation of the channel in HSV
+        """
+
+        img_hsv = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
+
+        return Color.mean_sdv(img_hsv, channel)
 
     @staticmethod
     def mean_sdv(img, channel=0):
-        """
-        @brief Calculate the mean and the starndard desviation of an image.
+        """ Calc the mean an the standard desviation of a channel of an image
 
-        :param img:
-        :param channel:
-        :return:
+        Args:
+            img: Image with three channels
+            channel: Id of the channel to calculate the mean and the standard desviation
+
+        Returns:
+            Mean and standard desviation of the channel
         """
         if channel != 0:
-            if channel == 1:
-                chann, _, _ = cv2.split(img)
-            elif channel == 2:
-                _, chann, _ = cv2.split(img)
-            else:
-                _, _, chann = cv2.split(img)
-
+            channel = cv2.split(img)[channel - 1]
         else:
-            chann = copy(img)
+            channel = copy(img)
 
-        return cv2.meanStdDev(chann)
+        return cv2.meanStdDev(channel)
 
     @staticmethod
     def dominant_colors(image: np.ndarray, mask: np.ndarray, n_colors: int,
                         random_start: int = 42):
-        """
-        @brief Get the dominants colors of an image.
+        """ Get the dominant colors of an image
 
-        :param image:
-        :param mask:
-        :param n_colors:
-        :param random_start:
-        :return:
+        Args:
+            image: Numpy array of a color image
+            mask: Numpy array of a binary image
+            n_colors: Number of colors to return
+            random_start: Random seed for the kmeans algorithm
+
+        Returns:
+            A list of colors corresponding to the dominant colors of the image
         """
         hue, saturation, value = cv2.split(image)
 
         train = []
 
-        for x in range(0, hue.shape[0]):
-            for y in range(0, hue.shape[1]):
-                if mask[x][y] == 1:
+        for coord_x in range(0, hue.shape[0]):
+            for coord_y in range(0, hue.shape[1]):
+                if mask[coord_x][coord_y] == 1:
                     if train is None:
-                        train = np.array([hue[x][y], saturation[x][y], value[x][y]])
+                        train = np.array([hue[coord_x][coord_y], saturation[coord_x][coord_y],
+                                          value[coord_x][coord_y]])
                     else:
-                        train.append(np.array([hue[x][y], saturation[x][y], value[x][y]]))
+                        train.append(np.array([hue[coord_x][coord_y], saturation[coord_x][coord_y],
+                                               value[coord_x][coord_y]]))
 
         kmeans = cluster.KMeans(n_clusters=n_colors, random_state=random_start)
         clusters = kmeans.fit_predict(np.array(train))
@@ -96,16 +114,18 @@ class Color:
 
     @staticmethod
     def color_bins(image: np.ndarray, mask: np.ndarray, n_colors: int):
-        """
-        @brief Calculate an histogram of color for every channel.
+        """ Calculate the color bins of an image
 
-        Color images are a combination of three images or channels. For every channel we will
-        calculate the histogram and concatenate them.
+        Color bins are the dominant colors of the image divided in n_colors bins. For each channel,
+        the color bins are calculated as the mean of the dominant colors of the image.
 
-        :param image: Numpy array of a color image
-        :param mask: Numpy array of a binary image
-        :param n_colors: Integer. Number of bins for channel
-        :return: histogram. A numpy array with shape n_color * 3
+        Args:
+            image: Numpy array of a color image
+            mask: Numpy array of a binary image
+            n_colors: Integer number of color bins for each channel
+
+        Returns:
+            A list of color bins for each channel concatenated.
         """
         channels = cv2.split(image)
         histograms = [np.histogram(c[mask], bins=n_colors)[0] for c in channels]
